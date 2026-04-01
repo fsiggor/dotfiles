@@ -2,5 +2,5 @@
 
 ## Install
 ```
-curl -fsSL https://raw.githubusercontent.com/SEU_USER/dotfiles/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/fsiggor/dotfiles/main/install.sh | bash
 ```
