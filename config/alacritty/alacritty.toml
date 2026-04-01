@@ -1,0 +1,19 @@
+# Alacritty config — customize as needed
+# Docs: https://alacritty.org/config-alacritty.html
+
+[font]
+size = 14.0
+
+[font.normal]
+family = "JetBrains Mono"
+style = "Regular"
+
+[window]
+padding = { x = 8, y = 8 }
+decorations = "Buttonless"
+opacity = 0.96
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
