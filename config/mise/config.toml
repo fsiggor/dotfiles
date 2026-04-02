@@ -1,5 +1,23 @@
+# Mise Configuration (runtime version manager)
+# Docs: https://mise.jdx.dev/configuration.html
+
+# ── Tools ─────────────────────────────────────────────────────────
+# https://mise.jdx.dev/configuration.html#tools
 [tools]
-go = "latest"
-node = "latest"
-python = "latest"
-rust = "latest"
+go = "latest"                       # Go — always latest stable (backend services, CLI tools)
+node = "lts"                        # Node.js — LTS for stability in production builds
+python = "latest"                   # Python — latest stable (scripts, automation, ML)
+rust = "latest"                     # Rust — latest stable (systems programming, CLI tools)
+
+# ── Settings ──────────────────────────────────────────────────────
+# https://mise.jdx.dev/configuration.html#settings
+[settings]
+experimental = true                 # Enable experimental features (tasks, env templates)
+always_keep_download = false        # Delete downloaded archives after installation (saves disk space)
+always_keep_install = false         # Allow removing old versions when installing new ones
+
+# ── Environment ───────────────────────────────────────────────────
+# https://mise.jdx.dev/configuration.html#env
+# Template syntax: https://mise.jdx.dev/templates.html
+[env]
+GOPATH = "{{env.HOME}}/go"         # Go workspace directory for packages and source

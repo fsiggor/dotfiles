@@ -1,32 +1,164 @@
-# Path
-export PATH="$HOME/.local/bin:$PATH"
+# Zsh Configuration
+# Docs: https://zsh.sourceforge.io/Doc/Release/Options.html
+# Oh My Zsh: https://github.com/ohmyzsh/ohmyzsh/wiki
 
-# Oh My Zsh
+# ── Homebrew (must be first — adds brew to PATH for everything below) ──
+# https://docs.brew.sh/Installation
+if [[ -f /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"       # Apple Silicon (M1+)
+elif [[ -f /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"          # Intel Mac
+fi
+
+# ── Path ──────────────────────────────────────────────────────────
+# typeset -U removes duplicate entries from $path array
+# https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html#index-typeset
+typeset -U path
+path=(
+  "$HOME/.local/bin"                              # User-local binaries (pipx, custom scripts)
+  "$HOME/go/bin"                                  # Go compiled binaries (go install)
+  "$HOME/.bun/bin"                                # Bun JavaScript runtime
+  "$HOME/.antigravity/antigravity/bin"            # Antigravity CLI
+  $path
+)
+
+# ── Oh My Zsh ─────────────────────────────────────────────────────
+# https://github.com/ohmyzsh/ohmyzsh/wiki/Settings
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
-plugins=(git docker mise)
+ZSH_THEME="spaceship"              # Spaceship prompt — https://spaceship-prompt.sh/
+plugins=(
+  git                               # Git aliases and completions — https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
+  docker                            # Docker completions — https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
+  docker-compose                    # Docker Compose completions — https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker-compose
+  kubectl                           # Kubectl completions and aliases — https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/kubectl
+  mise                              # Mise shell integration — https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/mise
+  zsh-autosuggestions               # Fish-like inline suggestions — https://github.com/zsh-users/zsh-autosuggestions
+  zsh-syntax-highlighting           # Syntax highlighting as you type — https://github.com/zsh-users/zsh-syntax-highlighting
+)
 source "$ZSH/oh-my-zsh.sh"
 
-# Homebrew
-if [[ -f /opt/homebrew/bin/brew ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -f /usr/local/bin/brew ]]; then
-  eval "$(/usr/local/bin/brew shellenv)"
-fi
+# ── Spaceship prompt (Tokyo Night colors) ─────────────────────────
+# https://spaceship-prompt.sh/config/intro/
+SPACESHIP_PROMPT_ORDER=(
+  dir                               # Current directory
+  git                               # Git branch and status
+  node                              # Node.js version
+  golang                            # Go version
+  rust                              # Rust version
+  python                            # Python version
+  docker                            # Docker version
+  kubectl                           # Kubectl context
+  line_sep                          # Line break
+  char                              # Prompt character
+)
 
-# mise
+# Prompt character — https://spaceship-prompt.sh/sections/char/
+SPACESHIP_CHAR_SYMBOL="❯"          # Prompt symbol
+SPACESHIP_CHAR_SUFFIX=" "
+SPACESHIP_CHAR_COLOR_SUCCESS="#9ece6a"   # Tokyo Night green on success
+SPACESHIP_CHAR_COLOR_FAILURE="#f7768e"   # Tokyo Night red on failure
+
+# Directory — https://spaceship-prompt.sh/sections/dir/
+SPACESHIP_DIR_COLOR="#7aa2f7"       # Tokyo Night blue
+SPACESHIP_DIR_TRUNC=3               # Show last 3 directories
+SPACESHIP_DIR_TRUNC_REPO=false      # Don't truncate inside git repos
+
+# Git — https://spaceship-prompt.sh/sections/git/
+SPACESHIP_GIT_BRANCH_COLOR="#bb9af7"     # Tokyo Night magenta for branch name
+SPACESHIP_GIT_STATUS_COLOR="#e0af68"     # Tokyo Night yellow for dirty/staged indicators
+SPACESHIP_GIT_STATUS_STASHED=""          # Hide stash indicator (reduces noise)
+
+# Node.js — https://spaceship-prompt.sh/sections/node/
+SPACESHIP_NODE_COLOR="#9ece6a"      # Tokyo Night green
+SPACESHIP_NODE_SYMBOL=" "
+
+# Go — https://spaceship-prompt.sh/sections/golang/
+SPACESHIP_GOLANG_COLOR="#7dcfff"    # Tokyo Night cyan
+SPACESHIP_GOLANG_SYMBOL=" "
+
+# Rust — https://spaceship-prompt.sh/sections/rust/
+SPACESHIP_RUST_COLOR="#f7768e"      # Tokyo Night red
+SPACESHIP_RUST_SYMBOL=" "
+
+# Python — https://spaceship-prompt.sh/sections/python/
+SPACESHIP_PYTHON_COLOR="#e0af68"    # Tokyo Night yellow
+SPACESHIP_PYTHON_SYMBOL=" "
+
+# Docker — https://spaceship-prompt.sh/sections/docker/
+SPACESHIP_DOCKER_COLOR="#7aa2f7"    # Tokyo Night blue
+SPACESHIP_DOCKER_SYMBOL=" "
+
+# Kubectl — https://spaceship-prompt.sh/sections/kubectl/
+SPACESHIP_KUBECTL_SHOW=true         # Show kubectl context (hidden by default)
+SPACESHIP_KUBECTL_COLOR="#7dcfff"   # Tokyo Night cyan
+SPACESHIP_KUBECTL_SYMBOL="⎈ "
+
+# ── Tool activation ──────────────────────────────────────────────
+# https://mise.jdx.dev/getting-started.html#activate-mise
 if command -v mise &>/dev/null; then
-  eval "$(mise activate zsh)"
+  eval "$(mise activate zsh)"       # Activate mise to manage runtime versions
 fi
 
-# Aliases
-alias vim="nvim"
-alias v="nvim"
-alias ll="ls -la"
-alias gs="git status"
-alias gc="git commit"
-alias gp="git push"
-alias gl="git lg"
+# ── Environment ───────────────────────────────────────────────────
+export EDITOR="nvim"                # Default editor for git commit, crontab, etc.
+export VISUAL="nvim"                # Editor for visual/full-screen editing
+export LANG="en_US.UTF-8"          # Locale setting for consistent string handling
+export LC_ALL="en_US.UTF-8"        # Override all locale categories
+export MANPAGER="nvim +Man!"       # Use neovim as man page viewer (with syntax highlighting)
+export BUN_INSTALL="$HOME/.bun"    # Bun installation directory
 
-# Added by Antigravity
-export PATH="/Users/fsiggor/.antigravity/antigravity/bin:$PATH"
+# ── History ───────────────────────────────────────────────────────
+# https://zsh.sourceforge.io/Doc/Release/Options.html#History
+export HISTSIZE=50000               # Max events stored in memory per session
+export SAVEHIST=50000               # Max events saved to history file
+setopt HIST_IGNORE_ALL_DUPS         # Remove older duplicate when new duplicate is added
+setopt HIST_SAVE_NO_DUPS            # Don't write duplicates to history file
+setopt HIST_REDUCE_BLANKS           # Remove extra whitespace from commands before saving
+setopt HIST_FIND_NO_DUPS            # Skip duplicates when searching history with Ctrl+R
+setopt SHARE_HISTORY                # Share history across all active zsh sessions
+setopt INC_APPEND_HISTORY           # Write to history file immediately (not just on exit)
+setopt EXTENDED_HISTORY             # Save timestamp and duration for each command
+
+# ── Directory ─────────────────────────────────────────────────────
+# https://zsh.sourceforge.io/Doc/Release/Options.html#Changing-Directories
+setopt AUTO_CD                      # Type directory name to cd into it (no cd needed)
+setopt AUTO_PUSHD                   # Push dirs onto stack on cd (use `dirs -v` to list, cd -N to jump)
+setopt PUSHD_IGNORE_DUPS            # Don't push duplicate directories onto the stack
+setopt PUSHD_SILENT                 # Don't print directory stack on pushd/popd
+
+# ── Completion ────────────────────────────────────────────────────
+# https://zsh.sourceforge.io/Doc/Release/Completion-System.html
+setopt COMPLETE_IN_WORD             # Allow completion from within a word (not just at end)
+setopt ALWAYS_TO_END                # Move cursor to end of word after completion
+zstyle ':completion:*' menu select                              # Use arrow-key menu for completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'      # Case-insensitive completion matching
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colorize completions using LS_COLORS
+zstyle ':completion:*:descriptions' format '%F{yellow}── %d ──%f'  # Yellow headers for completion groups
+
+# ── Aliases ───────────────────────────────────────────────────────
+# Only program shortcuts — subcommand aliases are handled by each tool's own plugin/config
+# Git aliases: oh-my-zsh git plugin + gitconfig [alias] section
+# Docker aliases: oh-my-zsh docker/docker-compose plugins
+# Kubectl aliases: oh-my-zsh kubectl plugin
+alias v="nvim"                      # Neovim
+alias vim="nvim"                    # Always use neovim instead of vim
+alias g="git"                       # Git — https://git-scm.com/
+alias d="docker"                    # Docker — https://docs.docker.com/reference/cli/docker/
+alias dc="docker compose"           # Docker Compose V2 — https://docs.docker.com/compose/
+alias k="kubectl"                   # Kubernetes CLI — https://kubernetes.io/docs/reference/kubectl/
+alias cat="bat --style=plain 2>/dev/null || cat"  # bat as cat replacement — https://github.com/sharkdp/bat
+alias ls="eza --icons --group-directories-first 2>/dev/null || ls"  # eza as ls replacement — https://github.com/eza-community/eza
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# ── Functions ─────────────────────────────────────────────────────
+# Create directory and cd into it in one step
+mkcd() { mkdir -p "$1" && cd "$1" }
+
+# Find and kill process occupying a given port
+killport() { lsof -ti:"$1" | xargs kill -9 2>/dev/null && echo "Killed port $1" || echo "No process on port $1" }
+
+# ── Bun completions ──────────────────────────────────────────────
+# https://bun.sh/docs/installation
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"

@@ -1,19 +1,124 @@
-# Alacritty config — customize as needed
+# Alacritty Configuration
 # Docs: https://alacritty.org/config-alacritty.html
 
+# ── Font ──────────────────────────────────────────────────────────
+# https://alacritty.org/config-alacritty.html#font
 [font]
-size = 14.0
+size = 14.0                         # Font size in points
 
 [font.normal]
-family = "JetBrains Mono"
+family = "JetBrains Mono"          # Monospace font with ligatures — https://www.jetbrains.com/lp/mono/
 style = "Regular"
 
-[window]
-padding = { x = 8, y = 8 }
-decorations = "Buttonless"
-opacity = 0.96
+[font.bold]
+family = "JetBrains Mono"
+style = "Bold"
 
+[font.italic]
+family = "JetBrains Mono"
+style = "Italic"
+
+[font.bold_italic]
+family = "JetBrains Mono"
+style = "Bold Italic"
+
+# ── Window ────────────────────────────────────────────────────────
+# https://alacritty.org/config-alacritty.html#window
+[window]
+startup_mode = "Maximized"          # Launch maximized ("Windowed", "Maximized", "Fullscreen")
+padding = { x = 16, y = 12 }       # Inner padding in pixels (content won't touch window edges)
+decorations = "Buttonless"          # macOS: hide title bar buttons but keep rounded corners
+opacity = 0.95                      # Window transparency (0.0 = fully transparent, 1.0 = opaque)
+dynamic_padding = true              # Center content by adding equal padding on all sides
+option_as_alt = "Both"              # macOS: treat both Option keys as Alt (needed for terminal keybinds)
+
+# ── Scrolling ─────────────────────────────────────────────────────
+# https://alacritty.org/config-alacritty.html#scrolling
+[scrolling]
+history = 10000                     # Max lines stored in scrollback buffer
+multiplier = 3                      # Scroll speed multiplier (lines per scroll event)
+
+# ── Cursor ────────────────────────────────────────────────────────
+# https://alacritty.org/config-alacritty.html#cursor
+[cursor.style]
+shape = "Block"                     # Cursor shape: "Block", "Underline", or "Beam"
+blinking = "On"                     # Enable cursor blinking
+
+[cursor.vi_mode_style]
+shape = "Beam"                      # Use beam cursor in vi mode to distinguish from normal mode
+
+# ── Mouse ─────────────────────────────────────────────────────────
+# https://alacritty.org/config-alacritty.html#mouse
+[mouse]
+hide_when_typing = true             # Auto-hide mouse cursor while typing
+
+# ── Selection ─────────────────────────────────────────────────────
+# https://alacritty.org/config-alacritty.html#selection
+[selection]
+save_to_clipboard = true            # Automatically copy selected text to system clipboard
+
+# ── Terminal ──────────────────────────────────────────────────────
+# https://alacritty.org/config-alacritty.html#terminal
+[terminal]
+osc52 = "CopyPaste"                # Allow programs (tmux, nvim) to read/write clipboard via OSC 52 escape
+
+[env]
+TERM = "xterm-256color"             # Advertise 256-color support to programs running inside the terminal
+
+# ── Tokyo Night theme ─────────────────────────────────────────────
+# Color scheme by Enkia — https://github.com/enkia/tokyo-night-vscode-theme
+[colors.primary]
+background = "#1a1b26"              # Dark background
+foreground = "#c0caf5"              # Light blue-white foreground
+
+[colors.normal]
+black   = "#15161e"
+red     = "#f7768e"
+green   = "#9ece6a"
+yellow  = "#e0af68"
+blue    = "#7aa2f7"
+magenta = "#bb9af7"
+cyan    = "#7dcfff"
+white   = "#a9b1d6"
+
+[colors.bright]
+black   = "#414868"
+red     = "#f7768e"
+green   = "#9ece6a"
+yellow  = "#e0af68"
+blue    = "#7aa2f7"
+magenta = "#bb9af7"
+cyan    = "#7dcfff"
+white   = "#c0caf5"
+
+# ── Keybindings ───────────────────────────────────────────────────
+# https://alacritty.org/config-alacritty.html#keyboard
 [[keyboard.bindings]]
 key = "Return"
 mods = "Shift"
-chars = "\u001B\r"
+chars = "\u001B\r"                  # Send ESC+Enter — useful for programs that distinguish Shift+Enter
+
+[[keyboard.bindings]]
+key = "N"
+mods = "Command|Shift"
+action = "SpawnNewInstance"         # Cmd+Shift+N: open a new Alacritty window
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+action = "ClearHistory"             # Cmd+K: clear scrollback history (like macOS Terminal)
+
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Command"
+action = "ResetFontSize"            # Cmd+0: reset font size to default
+
+[[keyboard.bindings]]
+key = "Equals"
+mods = "Command"
+action = "IncreaseFontSize"         # Cmd+=: increase font size
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Command"
+action = "DecreaseFontSize"         # Cmd+-: decrease font size
