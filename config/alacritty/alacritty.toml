@@ -26,7 +26,7 @@ style = "Bold Italic"
 # https://alacritty.org/config-alacritty.html#window
 [window]
 startup_mode = "Maximized"          # Launch maximized ("Windowed", "Maximized", "Fullscreen")
-padding = { x = 16, y = 12 }       # Inner padding in pixels (content won't touch window edges)
+padding = { x = 16, y = 0 }        # Inner padding in pixels (y=0 so tmux bar sits flush at edges)
 decorations = "Buttonless"          # macOS: hide title bar buttons but keep rounded corners
 opacity = 0.95                      # Window transparency (0.0 = fully transparent, 1.0 = opaque)
 dynamic_padding = true              # Center content by adding equal padding on all sides

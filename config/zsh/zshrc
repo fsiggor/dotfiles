@@ -2,6 +2,12 @@
 # Docs: https://zsh.sourceforge.io/Doc/Release/Options.html
 # Oh My Zsh: https://github.com/ohmyzsh/ohmyzsh/wiki
 
+# ── Tmux auto-start ──────────────────────────────────────────
+# Attach to existing session or create a new one when opening the terminal
+if command -v tmux &>/dev/null && [[ -z "$TMUX" ]]; then
+  tmux attach -t default 2>/dev/null || tmux new-session -s default
+fi
+
 # ── Homebrew (must be first — adds brew to PATH for everything below) ──
 # https://docs.brew.sh/Installation
 if [[ -f /opt/homebrew/bin/brew ]]; then
