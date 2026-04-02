@@ -5,7 +5,7 @@
 # https://mise.jdx.dev/configuration.html#tools
 [tools]
 go = "latest"                       # Go — always latest stable (backend services, CLI tools)
-node = "lts"                        # Node.js — LTS for stability in production builds
+node = "latest"
 python = "latest"                   # Python — latest stable (scripts, automation, ML)
 rust = "latest"                     # Rust — latest stable (systems programming, CLI tools)
 

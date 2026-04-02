@@ -240,6 +240,40 @@ else
   success "Oh My Zsh installed"
 fi
 
+# Spaceship theme — https://spaceship-prompt.sh/
+info "Checking Spaceship theme..."
+SPACESHIP_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/spaceship-prompt"
+if [[ -d "$SPACESHIP_DIR" ]]; then
+  success "Spaceship theme already installed"
+else
+  info "Installing Spaceship theme..."
+  git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$SPACESHIP_DIR" --depth=1
+  ln -sf "$SPACESHIP_DIR/spaceship.zsh-theme" "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/spaceship.zsh-theme"
+  success "Spaceship theme installed"
+fi
+
+# zsh-autosuggestions plugin — https://github.com/zsh-users/zsh-autosuggestions
+info "Checking zsh-autosuggestions..."
+ZSH_AUTOSUGGEST_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+if [[ -d "$ZSH_AUTOSUGGEST_DIR" ]]; then
+  success "zsh-autosuggestions already installed"
+else
+  info "Installing zsh-autosuggestions..."
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_AUTOSUGGEST_DIR"
+  success "zsh-autosuggestions installed"
+fi
+
+# zsh-syntax-highlighting plugin — https://github.com/zsh-users/zsh-syntax-highlighting
+info "Checking zsh-syntax-highlighting..."
+ZSH_SYNTAX_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+if [[ -d "$ZSH_SYNTAX_DIR" ]]; then
+  success "zsh-syntax-highlighting already installed"
+else
+  info "Installing zsh-syntax-highlighting..."
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_SYNTAX_DIR"
+  success "zsh-syntax-highlighting installed"
+fi
+
 # ──────────────────────────────────────────────
 # 14. Fonts
 # ──────────────────────────────────────────────
@@ -338,7 +372,7 @@ echo "  • Neovim       — Text editor"
 echo "  • tmux         — Terminal multiplexer"
 echo "  • OpenCode     — AI coding agent"
 echo "  • Antigravity  — Google Cloud IDE"
-echo "  • Oh My Zsh    — Zsh framework"
+echo "  • Oh My Zsh    — Zsh framework (+ Spaceship theme, autosuggestions, syntax highlighting)"
 echo "  • JetBrains Mono Nerd Font"
 echo ""
 echo -e "${GREEN}Languages (via mise):${NC}"

@@ -7,19 +7,19 @@
 size = 14.0                         # Font size in points
 
 [font.normal]
-family = "JetBrains Mono"          # Monospace font with ligatures — https://www.jetbrains.com/lp/mono/
+family = "JetBrainsMono Nerd Font" # Nerd Font variant with icons — https://www.nerdfonts.com/
 style = "Regular"
 
 [font.bold]
-family = "JetBrains Mono"
+family = "JetBrainsMono Nerd Font"
 style = "Bold"
 
 [font.italic]
-family = "JetBrains Mono"
+family = "JetBrainsMono Nerd Font"
 style = "Italic"
 
 [font.bold_italic]
-family = "JetBrains Mono"
+family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
 
 # ── Window ────────────────────────────────────────────────────────
